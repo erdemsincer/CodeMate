@@ -38,7 +38,7 @@ services:
       - postgres
       - rabbitmq
     ports:
-      - "5001:8080"
+      - "5301:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
@@ -50,7 +50,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "5002:8080"
+      - "5302:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
@@ -62,7 +62,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "5003:8080"
+      - "5303:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
  
