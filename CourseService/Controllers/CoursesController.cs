@@ -1,4 +1,5 @@
 ﻿using CourseService.Data;
+using CourseService.Dtos;
 using CourseService.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,12 +22,19 @@ namespace CourseService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Course course)
+        public async Task<IActionResult> Create([FromBody] CourseCreateDto dto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId is null) return Unauthorized();
 
-            course.OwnerId = Guid.Parse(userId);
+            var course = new Course
+            {
+                OwnerId = Guid.Parse(userId),
+                Title = dto.Title,
+                Description = dto.Description,
+                CreatedAt = DateTime.UtcNow
+            };
+
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
 
