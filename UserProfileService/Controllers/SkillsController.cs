@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using UserProfileService.Dtos;
 using UserProfileService.Services;
 
 namespace UserProfileService.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class SkillsController : ControllerBase
@@ -19,13 +21,15 @@ namespace UserProfileService.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSkill([FromBody] UserSkillDto dto)
         {
-            await _service.AddSkillAsync(dto);
+            var userId = GetUserId();
+            await _service.AddSkillAsync(userId, dto);
             return Ok();
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IActionResult> GetSkills(Guid userId)
+        [HttpGet("my-skills")]
+        public async Task<IActionResult> GetMySkills()
         {
+            var userId = GetUserId();
             var skills = await _service.GetSkillsAsync(userId);
             return Ok(skills);
         }
@@ -35,6 +39,12 @@ namespace UserProfileService.Controllers
         {
             await _service.DeleteSkillAsync(skillId);
             return NoContent();
+        }
+
+        private Guid GetUserId()
+        {
+            var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return Guid.Parse(userIdStr!);
         }
     }
 }
