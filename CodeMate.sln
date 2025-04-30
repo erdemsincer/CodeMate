@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseService", "CourseService\CourseService.csproj", "{90A898FA-FDEA-492B-9A50-7E7F4286A131}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfferService", "OfferService\OfferService.csproj", "{13F87CDA-0EEB-476F-AF62-EB2820B2F12C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,6 +62,10 @@ Global
 		{90A898FA-FDEA-492B-9A50-7E7F4286A131}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90A898FA-FDEA-492B-9A50-7E7F4286A131}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90A898FA-FDEA-492B-9A50-7E7F4286A131}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13F87CDA-0EEB-476F-AF62-EB2820B2F12C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13F87CDA-0EEB-476F-AF62-EB2820B2F12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13F87CDA-0EEB-476F-AF62-EB2820B2F12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13F87CDA-0EEB-476F-AF62-EB2820B2F12C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{0C6361B6-1596-4BDA-A61D-4AAD708D7D89} = {50CA0521-CB82-49D8-983C-DE9CEE9A4B0C}
 		{35247634-A8D6-48B0-B7FC-CFFEEB833A8E} = {0D3BF990-46DE-4184-96F6-7B3FB8A24874}
 		{90A898FA-FDEA-492B-9A50-7E7F4286A131} = {50CA0521-CB82-49D8-983C-DE9CEE9A4B0C}
+		{13F87CDA-0EEB-476F-AF62-EB2820B2F12C} = {50CA0521-CB82-49D8-983C-DE9CEE9A4B0C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A3975CB2-47BE-4213-8A24-D1629F64408A}
