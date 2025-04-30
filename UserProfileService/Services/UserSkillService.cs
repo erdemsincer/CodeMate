@@ -14,11 +14,11 @@ namespace UserProfileService.Services
             _context = context;
         }
 
-        public async Task AddSkillAsync(UserSkillDto dto)
+        public async Task AddSkillAsync(Guid userId, UserSkillDto dto)
         {
             var skill = new UserSkill
             {
-                UserId = dto.UserId,
+                UserId = userId,
                 SkillName = dto.SkillName,
                 SkillType = Enum.Parse<SkillType>(dto.SkillType, true)
             };
@@ -33,7 +33,6 @@ namespace UserProfileService.Services
                 .Where(s => s.UserId == userId)
                 .Select(s => new UserSkillDto
                 {
-                    UserId = s.UserId,
                     SkillName = s.SkillName,
                     SkillType = s.SkillType.ToString()
                 })
