@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseService", "CourseServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfferService", "OfferService\OfferService.csproj", "{13F87CDA-0EEB-476F-AF62-EB2820B2F12C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService", "OrderService\OrderService.csproj", "{0ECD4CB3-FEDA-445D-A513-588AF39648E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,10 @@ Global
 		{13F87CDA-0EEB-476F-AF62-EB2820B2F12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13F87CDA-0EEB-476F-AF62-EB2820B2F12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13F87CDA-0EEB-476F-AF62-EB2820B2F12C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ECD4CB3-FEDA-445D-A513-588AF39648E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ECD4CB3-FEDA-445D-A513-588AF39648E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ECD4CB3-FEDA-445D-A513-588AF39648E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ECD4CB3-FEDA-445D-A513-588AF39648E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{35247634-A8D6-48B0-B7FC-CFFEEB833A8E} = {0D3BF990-46DE-4184-96F6-7B3FB8A24874}
 		{90A898FA-FDEA-492B-9A50-7E7F4286A131} = {50CA0521-CB82-49D8-983C-DE9CEE9A4B0C}
 		{13F87CDA-0EEB-476F-AF62-EB2820B2F12C} = {50CA0521-CB82-49D8-983C-DE9CEE9A4B0C}
+		{0ECD4CB3-FEDA-445D-A513-588AF39648E2} = {50CA0521-CB82-49D8-983C-DE9CEE9A4B0C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A3975CB2-47BE-4213-8A24-D1629F64408A}
