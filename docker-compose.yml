@@ -87,11 +87,8 @@ services:
       - postgres
       - rabbitmq
     ports:
-      - "5005:8080"
+      - "5305:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-
-
- 
 volumes:
   pgdata:
