@@ -8,7 +8,7 @@ namespace UserProfileService.Data
     {
         public UserProfileDbContext(DbContextOptions<UserProfileDbContext> options) : base(options) { }
 
-        public DbSet<User> Users => Set<User>();
+        
         public DbSet<UserSkill> UserSkills => Set<UserSkill>();
     }
 }

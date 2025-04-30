@@ -6,8 +6,6 @@
         public Guid UserId { get; set; }
         public string SkillName { get; set; } = null!;
         public SkillType SkillType { get; set; }
-
-        public User User { get; set; } = null!;
     }
 
     public enum SkillType
