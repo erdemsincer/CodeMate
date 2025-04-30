@@ -12,7 +12,7 @@ using OfferService.Data;
 namespace OfferService.Migrations
 {
     [DbContext(typeof(OfferDbContext))]
-    [Migration("20250430221151_InitialCreate")]
+    [Migration("20250430231220_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

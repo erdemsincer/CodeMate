@@ -77,6 +77,9 @@ services:
       - "5304:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMq__Host=rabbitmq
+      - RabbitMq__Username=guest
+      - RabbitMq__Password=guest
 
   orderservice:
     build:
@@ -90,5 +93,8 @@ services:
       - "5305:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMq__Host=rabbitmq
+      - RabbitMq__Username=guest
+      - RabbitMq__Password=guest 
 volumes:
   pgdata:

@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfferService.Data;
 using OfferService.Dtos;
 using OfferService.Entities;
+using OrderService.Events;
 using System.Security.Claims;
 
 namespace OfferService.Controllers
@@ -14,10 +15,13 @@ namespace OfferService.Controllers
     public class OffersController : ControllerBase
     {
         private readonly OfferDbContext _context;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public OffersController(OfferDbContext context)
+
+        public OffersController(OfferDbContext context, IPublishEndpoint publishEndpoint)
         {
             _context = context;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpPost]
@@ -61,10 +65,21 @@ namespace OfferService.Controllers
         public async Task<IActionResult> ApproveOffer(int id)
         {
             var offer = await _context.Offers.FindAsync(id);
-            if (offer is null) return NotFound();
+            if (offer == null) return NotFound();
 
             offer.IsApproved = true;
             await _context.SaveChangesAsync();
+
+            // ✅ OrderService'e event gönder
+            var eventMessage = new OfferApprovedEvent
+            {
+                OfferId = offer.Id,
+                UserId = offer.UserId,
+                CourseId = offer.CourseId,
+                OfferedPrice = offer.OfferedPrice
+            };
+
+            await _publishEndpoint.Publish(eventMessage);
 
             return Ok(offer);
         }

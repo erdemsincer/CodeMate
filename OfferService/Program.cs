@@ -4,12 +4,36 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using OfferService.Data;
 using System.Text;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 builder.Services.AddDbContext<OfferDbContext>(options =>
     options.UseNpgsql(config.GetConnectionString("PostgresConnection")));
+
+builder.Services.AddMassTransit(x =>
+{
+    // Otomatik tüm publish/consumer konfigürasyonu yapýlsýn
+    x.SetKebabCaseEndpointNameFormatter();
+
+    // Eðer ileride consumer olacaksa buraya eklenebilir:
+    // x.AddConsumer<MyEventConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(config["RabbitMq:Host"], "/", h =>
+        {
+            h.Username(config["RabbitMq:Username"]);
+            h.Password(config["RabbitMq:Password"]);
+        });
+
+        // Eðer consumer tanýmý yapýlýrsa burada queue tanýmý yapýlmalý
+        // cfg.ReceiveEndpoint("my-queue", e => { e.ConfigureConsumer<MyEventConsumer>(context); });
+    });
+});
+
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
