@@ -96,5 +96,19 @@ services:
       - RabbitMq__Host=rabbitmq
       - RabbitMq__Username=guest
       - RabbitMq__Password=guest 
+
+
+  paymentservice:
+    build:
+      context: ./PaymentService
+      dockerfile: Dockerfile
+    container_name: devexchange_paymentservice
+    depends_on:
+      - rabbitmq
+    ports:
+      - "5306:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
 volumes:
   pgdata:
