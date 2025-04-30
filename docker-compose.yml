@@ -54,5 +54,17 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
+  courseservice:
+    build:
+      context: ./CourseService
+      dockerfile: Dockerfile
+    container_name: devexchange_courseservice
+    depends_on:
+      - postgres
+    ports:
+      - "5003:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+ 
 volumes:
   pgdata:
