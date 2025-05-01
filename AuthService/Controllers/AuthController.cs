@@ -32,5 +32,12 @@ namespace AuthService.Controllers
 
             return Ok(new { token });
         }
+        [HttpGet("all-ids")]
+        public async Task<IActionResult> GetAllUserIds()
+        {
+            var ids = await _authService.GetAllUserIdsAsync();
+            return Ok(ids);
+        }
+
     }
-    }
+}

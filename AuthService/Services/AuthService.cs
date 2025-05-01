@@ -70,5 +70,14 @@ namespace AuthService.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+     
+
+        public async Task<List<Guid>> GetAllUserIdsAsync()
+        {
+            return await _context.Users
+                .Select(u => u.Id)
+                .ToListAsync();
+        }
+
     }
 }
