@@ -113,5 +113,26 @@ services:
       - RabbitMq__Username=guest
       - RabbitMq__Password=guest
 
+
+ 
+  notificationservice-api:
+    build:
+      context: .
+      dockerfile: NotificationService/Dockerfile
+    container_name: devexchange_notificationservice
+    depends_on:
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMq__Host=rabbitmq
+      - RabbitMq__Username=guest
+      - RabbitMq__Password=guest
+    ports:
+      - "5307:8080"
+
+
+
+
+
 volumes:
   pgdata:
