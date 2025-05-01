@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using CodeMate.Shared.Contracts;
+using MassTransit;
 using OrderService.Data;
 using OrderService.Entities;
 using OrderService.Events;
@@ -29,6 +30,14 @@ namespace OrderService.Consumers
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
+
+            await context.Publish(new PaymentRequestedEvent
+            {
+                OrderId = order.Id,
+                UserId = order.UserId,
+                Amount = order.Amount
+            });
         }
+
     }
 }

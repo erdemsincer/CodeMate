@@ -34,6 +34,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<OfferApprovedConsumer>();
+    x.AddConsumer<PaymentCompletedConsumer>();
 
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -46,6 +47,11 @@ builder.Services.AddMassTransit(x =>
         cfg.ReceiveEndpoint("offer-approved-queue", e =>
         {
             e.ConfigureConsumer<OfferApprovedConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint("payment-completed-queue", e =>
+        {
+            e.ConfigureConsumer<PaymentCompletedConsumer>(context);
         });
     });
 });
