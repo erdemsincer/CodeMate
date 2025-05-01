@@ -7,5 +7,9 @@ namespace UserProfileService.Services
         Task AddSkillAsync(Guid userId, UserSkillDto dto);
         Task<List<UserSkillDto>> GetSkillsAsync(Guid userId);
         Task DeleteSkillAsync(int skillId);
+        Task<List<UserSkillDto>?> GetSkillsIfExistsAsync(Guid userId);
+
+
+
     }
 }

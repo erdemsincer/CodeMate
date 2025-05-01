@@ -48,5 +48,21 @@ namespace UserProfileService.Services
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<List<UserSkillDto>?> GetSkillsIfExistsAsync(Guid userId)
+        {
+            var skills = await _context.UserSkills
+                .Where(s => s.UserId == userId)
+                .Select(s => new UserSkillDto
+                {
+                    SkillName = s.SkillName,
+                    SkillType = s.SkillType.ToString()
+                })
+                .ToListAsync();
+
+            return skills.Any() ? skills : null;
+        }
+
+
+
     }
 }
