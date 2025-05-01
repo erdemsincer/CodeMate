@@ -22,7 +22,7 @@ namespace MatchingService.Controllers
             _matchingService = matchingService;
         }
 
-        // 🔥 Tüm eşleşmeleri listele
+        // 🔹 Tüm eşleşmeleri getir
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -30,16 +30,28 @@ namespace MatchingService.Controllers
             return Ok(matchings);
         }
 
-        // 🔥 Yeni eşleşme oluştur (mentee giriş yapan kullanıcı, mentor dışardan gelir)
-        [HttpPost("{mentorId}")]
-        public async Task<IActionResult> CreateMatching(Guid mentorId)
+        // 🔹 Yeni eşleşme oluştur
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] MatchingDto dto)
         {
-            var menteeId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (menteeId == null)
-                return Unauthorized();
+            await _matchingService.CreateMatchingAsync(dto.MentorId, dto.MenteeId);
+            return Ok(new { message = "Matching created." });
+        }
 
-            await _matchingService.CreateMatchingAsync(mentorId, Guid.Parse(menteeId));
-            return Ok(new { message = "Eşleşme başarıyla oluşturuldu." });
+        // 🔹 Belirli kullanıcıya ait eşleşmeleri getir
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetUserMatchings(Guid userId)
+        {
+            var matchings = await _matchingService.GetUserMatchingsAsync(userId);
+            return Ok(matchings);
+        }
+
+        // 🔹 Önerilen eşleşmeleri getir
+        [HttpGet("recommend/{userId}")]
+        public async Task<IActionResult> Recommend(Guid userId)
+        {
+            var recommended = await _matchingService.RecommendMatchingsAsync(userId);
+            return Ok(recommended);
         }
     }
 }

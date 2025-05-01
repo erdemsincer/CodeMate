@@ -7,6 +7,7 @@ namespace MatchingService.Services
     {
         Task<List<MatchingDto>> GetAllMatchingsAsync();
         Task CreateMatchingAsync(Guid mentorId, Guid menteeId);
-        
+        Task<List<MatchingDto>> GetUserMatchingsAsync(Guid userId);
+        Task<List<MatchingDto>> RecommendMatchingsAsync(Guid currentUserId);
     }
 }

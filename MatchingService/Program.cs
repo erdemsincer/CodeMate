@@ -12,6 +12,7 @@ var config = builder.Configuration;
 // PostgreSQL baðlantýsý
 builder.Services.AddDbContext<MatchingDbContext>(options =>
     options.UseNpgsql(config.GetConnectionString("PostgresConnection")));
+builder.Services.AddHttpClient(); // Add this line
 
 // JWT auth
 var key = Encoding.UTF8.GetBytes(config["JwtSettings:SecretKey"]!);
