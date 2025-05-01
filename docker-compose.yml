@@ -129,7 +129,19 @@ services:
       - RabbitMq__Password=guest
     ports:
       - "5307:8080"
+ 
 
+  matchingservice:
+    build:
+      context: .
+      dockerfile: MatchingService/Dockerfile
+    container_name: devexchange_matchingservice
+    depends_on:
+      - postgres
+    ports:
+      - "5308:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
 
 
 
