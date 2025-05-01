@@ -12,8 +12,8 @@ using UserProfileService.Data;
 namespace UserProfileService.Migrations
 {
     [DbContext(typeof(UserProfileDbContext))]
-    [Migration("20250430130521_erdem")]
-    partial class erdem
+    [Migration("20250501230357_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

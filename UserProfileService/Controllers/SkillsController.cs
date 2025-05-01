@@ -46,5 +46,18 @@ namespace UserProfileService.Controllers
             var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return Guid.Parse(userIdStr!);
         }
+        [HttpGet("only-if-exists/{userId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetSkillsIfExists(Guid userId)
+        {
+            var skills = await _service.GetSkillsIfExistsAsync(userId);
+
+            if (skills == null)
+                return NotFound(new { message = "Skill bulunamadı." });
+
+            return Ok(skills);
+        }
+
+
     }
 }
