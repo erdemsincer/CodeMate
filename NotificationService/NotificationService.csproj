@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="DocuSign.eSign.dll" Version="8.1.0" />
     <PackageReference Include="EcoCore" Version="7.2.0.16622" />
+    <PackageReference Include="MailKit" Version="4.12.0" />
     <PackageReference Include="MassTransit" Version="8.4.0" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />

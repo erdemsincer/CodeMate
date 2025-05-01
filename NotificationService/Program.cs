@@ -1,10 +1,18 @@
-using MassTransit;
+﻿using MassTransit;
 using NotificationService.Consumers;
+using NotificationService.Models;
+using NotificationService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+// 🔧 SMTP ayarlarını appsettings.json'dan al
+builder.Services.Configure<SmtpSettings>(
+    builder.Configuration.GetSection("SmtpSettings"));
 
+// 🔧 Mail servisini ekle
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+// 🔧 MassTransit (RabbitMQ)
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<PaymentCompletedConsumer>();
@@ -24,12 +32,12 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-builder.Services.AddMassTransitHostedService();
+
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseAuthorization();
