@@ -156,7 +156,17 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
      
 
-
+  reviewservice:
+    build:
+      context: .
+      dockerfile: ReviewService/Dockerfile
+    container_name: devexchange_reviewservice
+    depends_on:
+      - postgres
+    ports:
+      - "5310:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
 
 volumes:
   pgdata:
