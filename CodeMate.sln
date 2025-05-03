@@ -36,6 +36,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationService", "Noti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReviewService", "ReviewService\ReviewService.csproj", "{A397739E-807A-468E-8A8D-E21999B1EBF9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMate.Web", "CodeMate.Web\CodeMate.Web.csproj", "{39A0604D-2BD4-4056-B166-56136C39199C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +92,10 @@ Global
 		{A397739E-807A-468E-8A8D-E21999B1EBF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A397739E-807A-468E-8A8D-E21999B1EBF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A397739E-807A-468E-8A8D-E21999B1EBF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39A0604D-2BD4-4056-B166-56136C39199C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39A0604D-2BD4-4056-B166-56136C39199C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39A0604D-2BD4-4056-B166-56136C39199C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39A0604D-2BD4-4056-B166-56136C39199C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +112,7 @@ Global
 		{40A321BE-BA81-4D8D-9699-BC5B835B82DA} = {50CA0521-CB82-49D8-983C-DE9CEE9A4B0C}
 		{37B6552B-BDED-44B4-9307-EF00C9A522F8} = {50CA0521-CB82-49D8-983C-DE9CEE9A4B0C}
 		{A397739E-807A-468E-8A8D-E21999B1EBF9} = {50CA0521-CB82-49D8-983C-DE9CEE9A4B0C}
+		{39A0604D-2BD4-4056-B166-56136C39199C} = {50CA0521-CB82-49D8-983C-DE9CEE9A4B0C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A3975CB2-47BE-4213-8A24-D1629F64408A}
