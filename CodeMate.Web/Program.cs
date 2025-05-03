@@ -10,6 +10,13 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+// ✅ Cookie Authentication + LoginPath
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/Auth/Login"; // 🔥 Bu kritik
+    });
+
 var app = builder.Build();
 
 // 🔐 Hata yönetimi ve HTTPS
@@ -24,7 +31,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession();        // ✅ Session middleware (token için gerekli)
+app.UseSession();
+app.UseAuthentication(); // ✅ Authentication middleware
 app.UseAuthorization();
 
 // 🌐 MVC Route

@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Sohbet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2>💬 Gerçek Zamanlı Sohbet</h2>
+        <p class="text-muted">Anlık olarak mesajlaşabilirsiniz.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow rounded-4">
+                <div class="card-body">
+                    <div id="messagesList" class="border rounded p-3 mb-3 bg-light" style="height: 300px; overflow-y: auto;">
+                        <div class="text-muted text-center">Mesajlar burada görüntülenecek</div>
+                    </div>
+
+                    <form id="chatForm" class="d-flex flex-wrap gap-2">
+                        <input type="text" id="receiverId" class="form-control w-25" placeholder="Alıcı ID (Guid)" required />
+                        <input type="text" id="messageInput" class="form-control flex-grow-1" placeholder="Mesajınızı yazın..." required />
+                        <button type="submit" class="btn btn-primary">Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script>
+        const token = '@Context.Session.GetString("access_token")';
+
+        if (!token || token === '') {
+            alert("Oturum zaman aşımına uğradı. Lütfen tekrar giriş yapın.");
+        }
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("http://localhost:5309/chathub?access_token=" + token)
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        connection.on("ReceiveMessage", function (senderId, message) {
+            const container = document.getElementById("messagesList");
+
+            // İlk gelen mesajda default mesajı sil
+            if (container.children.length === 1 && container.children[0].classList.contains("text-muted")) {
+                container.innerHTML = "";
+            }
+
+            const msg = document.createElement("div");
+            msg.classList.add("mb-2");
+            msg.innerHTML = `<strong>${senderId}:</strong> ${message}`;
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+        });
+
+        connection.start().catch(err => {
+            console.error("SignalR bağlantı hatası:", err.toString());
+            alert("Sunucuya bağlanılamadı. Lütfen sayfayı yenileyin.");
+        });
+
+        document.getElementById("chatForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const receiverId = document.getElementById("receiverId").value.trim();
+            const message = document.getElementById("messageInput").value.trim();
+
+            if (!receiverId || !message) return;
+
+            connection.invoke("SendMessage", receiverId, message)
+                .then(() => {
+                    document.getElementById("messageInput").value = '';
+                })
+                .catch(err => {
+                    console.error("Mesaj gönderme hatası:", err.toString());
+                    alert("Mesaj gönderilemedi.");
+                });
+        });
+    </script>
+}
