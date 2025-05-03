@@ -55,5 +55,18 @@ namespace CourseService.Controllers
 
             return Ok(myCourses);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null) return NotFound();
+
+            return Ok(new
+            {
+                course.Id,
+                course.Title
+            });
+        }
+
     }
 }
