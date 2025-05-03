@@ -1,0 +1,36 @@
+﻿@model CodeMate.Web.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-lg border-0 rounded-4 mt-5">
+            <div class="card-body p-4">
+                <h2 class="text-center mb-4">Welcome Back</h2>
+
+                <form asp-action="Login" method="post">
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">Email</label>
+                        <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <small>Don't have an account? <a href="/Auth/Register">Register</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
