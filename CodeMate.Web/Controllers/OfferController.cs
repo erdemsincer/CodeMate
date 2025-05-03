@@ -48,5 +48,31 @@ namespace CodeMate.Web.Controllers
             return RedirectToAction("Index", "Dashboard");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> MyOffers()
+        {
+            var token = HttpContext.Session.GetString("access_token");
+            if (string.IsNullOrEmpty(token))
+                return RedirectToAction("Login", "Auth");
+
+            var client = _httpClientFactory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await client.GetAsync("http://offerservice:8080/api/offers/my");
+            var json = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine($"[WEB] MyOffers StatusCode: {response.StatusCode}");
+            Console.WriteLine($"[WEB] MyOffers JSON Body: {json}");
+
+            var offers = JsonSerializer.Deserialize<List<OfferViewModel>>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            return View(offers);
+        }
+
+
+
     }
 }
