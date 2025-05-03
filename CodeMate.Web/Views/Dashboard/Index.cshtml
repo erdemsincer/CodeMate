@@ -1,45 +1,37 @@
-﻿@{
-    ViewData["Title"] = "Dashboard";
+﻿@model List<CodeMate.Web.Models.CourseViewModel>
+
+@{
+    ViewData["Title"] = "Available Courses";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container mt-4">
-    <div class="text-center mb-5">
-        <h2>Welcome to <span class="text-primary">CodeMate</span> 👋</h2>
-        <p class="lead">
-            This is your personalized dashboard. Use the navigation bar to manage offers, view messages, and explore new skills.
-        </p>
-    </div>
+    <h2 class="mb-4 text-center">📚 Available Courses</h2>
 
-    <div class="row g-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">🧑‍🏫 Mentorship</h5>
-                    <p class="card-text">View and manage your mentor/mentee matches.</p>
-                    <a href="/Matching" class="btn btn-outline-primary mt-auto">Go to Mentorship</a>
-                </div>
-            </div>
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-warning text-center">
+            No courses available at the moment.
         </div>
-
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">💬 Chat</h5>
-                    <p class="card-text">Continue your conversations with matched users.</p>
-                    <a href="/Chat" class="btn btn-outline-primary mt-auto">Open Chat</a>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var course in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100 border-0">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-primary">@course.Title</h5>
+                            <p class="card-text flex-grow-1">@course.Description</p>
+                            <div class="mt-3 d-flex justify-content-between align-items-center">
+                                <small class="text-muted">📅 @course.CreatedAt.ToLocalTime().ToShortDateString()</small>
+                                <a href="/Offer/Create?courseId=@course.Id" class="btn btn-sm btn-outline-success">Make Offer</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
-
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 h-100">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">🎯 Offers</h5>
-                    <p class="card-text">See your active offers and respond to new opportunities.</p>
-                    <a href="/Offer" class="btn btn-outline-primary mt-auto">View Offers</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    }
 </div>
