@@ -143,6 +143,18 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
 
+  chatservice:
+    build:
+      context: .
+      dockerfile: ChatService/Dockerfile
+    container_name: devexchange_chatservice
+    depends_on:
+      - postgres
+    ports:
+      - "5309:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+     
 
 
 
