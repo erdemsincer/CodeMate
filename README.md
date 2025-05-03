@@ -51,3 +51,4 @@ Her biri ayrı bir veritabanı ve sorumluluk alanına sahiptir.
 ![Image](https://github.com/user-attachments/assets/ea5ac90b-09f2-4e34-b891-dbc5850a3067)
 ![Image](https://github.com/user-attachments/assets/c2cc2236-1ace-4471-aa4a-76d4e7e49f98)
 ![Image](https://github.com/user-attachments/assets/17c4988d-1c68-4112-a633-751ffbf98df5)
+![Image](https://github.com/user-attachments/assets/b9214b8c-3410-41c6-90cd-0690dd1cb790)
