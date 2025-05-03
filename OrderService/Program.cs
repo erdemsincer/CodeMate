@@ -9,7 +9,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
-
+builder.Services.AddHttpClient();
 // PostgreSQL
 builder.Services.AddDbContext<OrderDbContext>(options =>
     options.UseNpgsql(config.GetConnectionString("PostgresConnection")));
