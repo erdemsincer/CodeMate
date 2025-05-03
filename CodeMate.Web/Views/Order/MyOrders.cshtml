@@ -1,0 +1,53 @@
+﻿@model List<CodeMate.Web.Models.OrderViewModel>
+
+@{
+    ViewData["Title"] = "Siparişlerim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="text-center mb-5">
+        <h2 class="text-primary">🧾 Siparişlerim</h2>
+        <p class="lead">Satın aldığınız kurslar ve ödeme durumlarınız aşağıda listelenmiştir.</p>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center shadow-sm">
+            Henüz bir siparişiniz bulunmuyor.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover shadow-sm align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center">🎓 Kurs</th>
+                        <th class="text-center">💳 Durum</th>
+                        <th class="text-center">📅 Tarih</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@order.CourseTitle</td>
+                            <td class="text-center">
+                                @if (order.IsPaid)
+                                {
+                                    <span class="badge bg-success">Ödendi</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Bekliyor</span>
+                                }
+                            </td>
+                            <td class="text-center">@order.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
