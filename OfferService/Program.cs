@@ -8,6 +8,7 @@ using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
+builder.Services.AddHttpClient();
 
 builder.Services.AddDbContext<OfferDbContext>(options =>
     options.UseNpgsql(config.GetConnectionString("PostgresConnection")));
