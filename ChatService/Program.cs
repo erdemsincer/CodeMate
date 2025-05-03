@@ -3,20 +3,32 @@ using ChatService.Services;
 using ChatService.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Security.Claims;
+using System.Text;
 using ChatService.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 
-// 🔐 JWT Authentication (SignalR ile birlikte çalışması için ayarlandı)
+// 🔐 JWT (Secret Key tabanlı)
+var key = Encoding.UTF8.GetBytes(config["JwtSettings:SecretKey"]!);
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
-        options.Authority = "http://authservice"; // AuthService URL
-        options.RequireHttpsMetadata = false;
-        options.Audience = "chatservice";
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = config["JwtSettings:Issuer"],
+            ValidAudience = config["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
 
-        // SignalR için AccessToken query parametresi desteği
+        // 🔌 SignalR için query string'den token alma
         options.Events = new Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents
         {
             OnMessageReceived = context =>
@@ -34,42 +46,42 @@ builder.Services.AddAuthentication("Bearer")
 
 builder.Services.AddAuthorization();
 
-// 🛢️ EF Core DB
+// 🛢️ EF Core
 builder.Services.AddDbContext<ChatDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
+    options.UseNpgsql(config.GetConnectionString("PostgresConnection")));
 
 // 🧠 Services
 builder.Services.AddScoped<IChatService, ChatService.Services.ChatService>();
 
 // 🔌 SignalR
 builder.Services.AddSignalR();
-builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>(); // JWT'den userId çekmek için
+builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();
 
-// 🌐 API
+// 🌐 Swagger + Auth
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "ChatService API", Version = "v1" });
 
-    // JWT Bearer auth tanımı
-    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer eyJhbGciOi...'",
+        Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer eyJ...'",
         Name = "Authorization",
-        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT"
     });
 
-    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
-            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            new OpenApiSecurityScheme
             {
-                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                Reference = new OpenApiReference
                 {
-                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Type = ReferenceType.SecurityScheme,
                     Id = "Bearer"
                 }
             },
@@ -77,7 +89,6 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
 
 var app = builder.Build();
 
@@ -91,8 +102,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-// ✅ SignalR endpoint'i tanımla
 app.MapHub<ChatHub>("/chathub");
 
 app.Run();
